@@ -12,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class myCookie
@@ -58,10 +59,13 @@ public class myCookie extends HttpServlet {
 			
 		}
 		
+		HttpSession hs=request.getSession();
+		
+		
 		response.setContentType("text/html");
 		PrintWriter pw=response.getWriter();
 		
-		pw.println("Hi,"+id.getValue()+"-"+nickname.getValue()+"  "+password.getValue()+"<br>");
+		pw.println(hs.getId()+" Hi,"+id.getValue()+"-"+nickname.getValue()+"  "+password.getValue()+"<br>");
 		
 		Enumeration<String> reqHeader=(Enumeration<String>) request.getHeaderNames();
 		
