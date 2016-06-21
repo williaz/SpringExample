@@ -35,5 +35,10 @@
 	<classpathentry kind="lib" path="/Users/williaz/Documents/8Java/myJar/jaxrs-ri/jersey/osgi-resource-locator-1.0.1.jar"/>
 	<classpathentry kind="lib" path="/Users/williaz/Documents/8Java/myJar/jaxrs-ri/jersey/persistence-api-1.0.jar"/>
 	<classpathentry kind="lib" path="/Users/williaz/Documents/8Java/myJar/jaxrs-ri/jersey/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-jaxrs-1.9.13.jar"/>
+	<classpathentry kind="lib" path="/Users/williaz/Documents/8Java/myJar/jackson-annotations-2.7.0.jar"/>
+	<classpathentry kind="lib" path="/Users/williaz/Documents/8Java/myJar/jackson-core-2.7.0.jar"/>
+	<classpathentry kind="lib" path="/Users/williaz/Documents/8Java/myJar/jackson-databind-2.7.0.jar"/>
+	<classpathentry kind="lib" path="/Users/williaz/Documents/8Java/myJar/jackson-jaxrs-1.9.13.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

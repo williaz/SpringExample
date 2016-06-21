@@ -28,7 +28,8 @@ public class RsClient {
 			ProductBean pb=exp.request(MediaType.APPLICATION_XML).get(ProductBean.class);// Client API auto-unmarshal XML
 			System.out.println(pb);
 			//JSON
-			
+			ProductBean pb1=exp.request(MediaType.APPLICATION_JSON).get(ProductBean.class);// Client API auto-unmarshal XML
+			System.out.println(pb1);
 //			Response resp=exp.request(MediaType.APPLICATION_JSON).get();// Client API auto-unmarshal JSON
 //			ProductBean pb1=resp.readEntity(ProductBean.class);
 //			System.out.println(pb1);

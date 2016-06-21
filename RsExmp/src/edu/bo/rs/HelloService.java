@@ -52,9 +52,9 @@ public class HelloService {
 	
 	@GET
 	@Path("/example")
-	//@Produces({"application/xml","application/json"})
-	@Produces("application/json")
-	public ProductBean getProduct()
+	@Produces({"application/xml","application/json"})
+	//@Produces("application/json")
+	public Response getProduct()
 	{
 		ProductBean pd=new ProductBean();
 		
@@ -62,7 +62,7 @@ public class HelloService {
 		pd.setPrice(100.01);
 		pd.setName("WillBest");
 		
-		return pd;
+		return Response.status(200).entity(pd).build();
 		
 		
 	}
