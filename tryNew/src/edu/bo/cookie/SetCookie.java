@@ -46,7 +46,7 @@ public class SetCookie extends HttpServlet {
 		response.addCookie(ck2);
 		response.addCookie(ck3);
 		
-		response.setIntHeader("Refresh", 5);
+		//response.setIntHeader("Refresh", 5);
 		
 		response.sendRedirect("index.html");
 	}
