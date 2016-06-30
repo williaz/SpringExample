@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+
+
+<beans>
+<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.OracleDriver">
+		</property>
+		<property name="url"
+			value="jdbc:oracle:thin:@192.168.56.101:1521:xe">
+		</property>
+		<property name="username" value="will"/>
+		<property name="password" value="will123"/>
+		<property name="initialSize" value="5"/>
+		
+</bean>
+
+<bean id="cr" class="edu.bo.CreditCard">
+<property name="dataSource" ref="dataSource" />
+</bean>
+
+<bean id="dr" class="edu.bo.DebitCard">
+<property name="dataSource" ref="dataSource" />
+</bean>
+
+<bean id="m" class="edu.bo.Material">
+<property name="dataSource" ref="dataSource" />
+</bean>
+
+<bean id="tr" class="edu.bo.Transaction">
+<property name="dataSource" ref="dataSource" />
+</bean>
+
+<bean id="pwd" class="edu.bo.Password">
+<property name="dataSource" ref="dataSource" />
+</bean>
+
+</beans>
