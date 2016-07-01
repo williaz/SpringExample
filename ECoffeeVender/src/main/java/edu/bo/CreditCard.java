@@ -17,19 +17,18 @@ public class CreditCard extends Card implements CardDao {
 	private long CreditLimit=5000;
 	private Date ValidUpTo;
 
-	public boolean paymentValidation() {
+	public long paymentValidation(Scanner sc) {
 		long cardNumber=0;
-		Date validDate;
+		Date validDate=null;
 		long Amount=0;
-		Scanner sc=new Scanner(System.in);
+		//Scanner sc=new Scanner(System.in);
 		
 		try {
-			System.out.println("Enter Validity Date:");
-			validDate=Date.valueOf(sc.nextLine().trim());
-			
 			System.out.println("Enter Card Number:");
 			cardNumber=sc.nextLong();
-			
+			sc.nextLine();
+			System.out.println("Enter Validity Date:");
+			validDate=Date.valueOf(sc.nextLine().trim());
 			
 			
 			System.out.println("Enter Amount:");
@@ -39,9 +38,9 @@ public class CreditCard extends Card implements CardDao {
 		} catch (Exception e) {
 			System.out.println("Please check your format!");
 			//e.printStackTrace();
-			validDate=null;
+			
 		}finally{
-			sc.close();
+			//sc.close();
 		}
 		
 		//-------->paying
@@ -55,28 +54,28 @@ public class CreditCard extends Card implements CardDao {
 				this.jdbcTemplate.update("UPDATE CRHOLDER SET CRLIMIT=CRLIMIT-? WHERE CCNO=?",
 						Amount,cardNumber);
 				System.out.println("Paid!");
-				return true;
+				return Amount;
 				
 			}
 			else{
 				System.out.println("Wrong Information");
-				return false;
+				return 0;
 			}
 			  
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			System.out.println("Wrong Card Number");
-			return false;
+			return 0;
 		} 
 	}
 	
 
-	public void setCardData() {
+	public void setCardData(Scanner sc) {
 		
-		Scanner sc=new Scanner(System.in);
+		//Scanner sc=new Scanner(System.in);
 		try {
-			
+			sc.nextLine();
 			System.out.println("Enter Name:");
 			this.setName(sc.nextLine());
 			System.out.println("Date of Birth: formate(yyyy-[m]m-[d]d)");
@@ -92,7 +91,7 @@ public class CreditCard extends Card implements CardDao {
 			System.out.println("Please check your format!");
 			//e.printStackTrace();
 		} finally{
-			sc.close();
+			//sc.close();
 		}
 		
 		this.setId();
@@ -137,10 +136,7 @@ public class CreditCard extends Card implements CardDao {
 		ValidUpTo = validUpTo;
 	}
 
-	public void setCardData(Date date) {
-		ValidUpTo=date;
-		
-	}
+	
 	
 	
 

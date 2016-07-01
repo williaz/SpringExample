@@ -50,11 +50,11 @@ public class Material implements MaterialDao{
 		else
 		  return false;
 	}
-	public void addMaterial() {
+	public void addMaterial(Scanner sc) {
 		int cp=0;
 		int cm=0;
 		int sg=0;
-		Scanner sc=new Scanner(System.in);
+		//Scanner sc=new Scanner(System.in);
 		
 		try {
 			System.out.print("E-Coffee Vender\nAdd Material\n");
@@ -74,7 +74,7 @@ public class Material implements MaterialDao{
 			//e.printStackTrace();
 			
 		}finally{
-			sc.close();
+			//sc.close();
 		}
 		
 		jdbcTemplate.update("UPDATE MATERIAL SET COFFEEPOWDER=COFFEEPOWDER+?,SUGAR=SUGAR+?,"

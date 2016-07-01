@@ -15,12 +15,12 @@ public class Password extends JdbcDaoSupport implements PasswordDao{
 		this.password = password;
 	}
 
-	public void changePassword() {
+	public void changePassword(Scanner sc) {
 		String oldP;
 		String newP;
 		String confP;
-		Scanner sc=new Scanner(System.in);
-		
+		//Scanner sc=new Scanner(System.in);
+		sc.nextLine();
 		System.out.print("E-Coffee Vender\nChange Password\n");
 		System.out.println("Current Password :");
 		oldP=sc.nextLine();
@@ -28,6 +28,7 @@ public class Password extends JdbcDaoSupport implements PasswordDao{
 		String pwd=this.getJdbcTemplate().queryForObject("SELECT PASSWORD FROM PASSTEXT", String.class);
 		
 		if(pwd.equals(oldP)){
+			
 			System.out.println("New Password :");
 			newP=sc.nextLine();
 			System.out.println("Confirm Password :");

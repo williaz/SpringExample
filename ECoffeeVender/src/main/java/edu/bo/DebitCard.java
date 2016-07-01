@@ -18,13 +18,13 @@ public class DebitCard extends Card implements CardDao {
 	private long balance;
 	private int pin;
 
-	public boolean paymentValidation() {
+	public long paymentValidation(Scanner sc) {
 		long cardNumber=0;
 		int pwd=0;
 		long Amount=0;
 		
 		
-		Scanner sc=new Scanner(System.in);
+		//Scanner sc=new Scanner(System.in);
 		try {
 			
 			System.out.println("Enter Card Number:");
@@ -41,7 +41,7 @@ public class DebitCard extends Card implements CardDao {
 			System.out.println("Please check your format!");
 			//e.printStackTrace();
 		} finally{
-			sc.close();
+			//sc.close();
 		}
 		
 		//-------->paying
@@ -67,25 +67,26 @@ public class DebitCard extends Card implements CardDao {
 				this.jdbcTemplate.update("UPDATE DRHOLDER SET OPBAL=OPBAL-? WHERE DCNO=?",
 						Amount,cardNumber);
 				System.out.println("Paid!");
-				return true;
+				return Amount;
 				
 			}
 			else{
 				System.out.println("Wrong Information");
-				return false;
+				return 0;
 			}
 			  
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			System.out.println("Wrong Card Number");
-			return false;
+			return 0;
 		} 
 	}
 
-	public void setCardData() {
+	public void setCardData(Scanner sc) {
 		try {
-			Scanner sc=new Scanner(System.in);
+			//Scanner sc=new Scanner(System.in);
+			sc.nextLine();
 			System.out.println("Enter Name:");
 			this.setName(sc.nextLine());
 			System.out.println("Date of Birth: formate(yyyy-[m]m-[d]d)");
