@@ -84,6 +84,9 @@ public class DebitCard extends Card implements CardDao {
 	}
 
 	public void setCardData(Scanner sc) {
+		
+		boolean isSet=false;
+		
 		try {
 			//Scanner sc=new Scanner(System.in);
 			sc.nextLine();
@@ -104,17 +107,22 @@ public class DebitCard extends Card implements CardDao {
 		} catch (Exception e) {
 			System.out.println("Please check your format!");
 			//e.printStackTrace();
+		} finally{
+			if (isSet){
+				this.setId();
+				//--------------->store to DB
+				
+				
+				String Sql="INSERT INTO DRHOLDER VALUES (?,?,?,?,?,?,?)";
+				jdbcTemplate.update(Sql,this.getId(),this.getName(),this.getDateOFBirth(),
+							this.getAddress(),this.getPhoneNumber(),this.getBalance(),this.getPin());
+					
+				System.out.println("Update Record Successfully!");
+			}
+			else
+				System.out.println("Update Record No Successfully!");
 		}
 		
-		this.setId();
-		//--------------->store to DB
-		
-		
-			String Sql="INSERT INTO DRHOLDER VALUES (?,?,?,?,?,?,?)";
-			jdbcTemplate.update(Sql,this.getId(),this.getName(),this.getDateOFBirth(),
-					this.getAddress(),this.getPhoneNumber(),this.getBalance(),this.getPin());
-			
-			System.out.println("Update Record Successfully!");
 		
 		
 

@@ -147,6 +147,7 @@ public class VenderMachine {
 		long price=0;
 		Material m=(Material) context.getBean("m");
 		String pay="";
+		boolean isPaid=false;
 		
 		while(true)
 		{
@@ -167,22 +168,56 @@ public class VenderMachine {
 			{
 			case 1:
 				price=coinPaymentValidation(sc);
-				m.consume(cf);
-				pay="Cash";
+				
+				if(cf.getPrice()<=price){
+					m.consume(cf);
+					pay="Cash";
+					
+					// transaction
+					Transaction t=(Transaction)context.getBean("tr");
+					t.record(cf.getType(), pay);
+					
+					isPaid=true;
+				}
+				else
+					System.out.println("No enough payment!");
 				break;
 			case 2:
 				System.out.print("E-Coffee Vender\nCredit Card Payment\n\n");
 				CreditCard cc=(CreditCard) context.getBean("cr");
 				price=cc.paymentValidation(sc);
-				m.consume(cf);
-				pay="Credit";
+				
+				if(cf.getPrice()<=price){
+					m.consume(cf);
+					pay="Credit";
+					
+					// transaction
+					Transaction t=(Transaction)context.getBean("tr");
+					t.record(cf.getType(), pay);
+					
+					isPaid=true;
+				}
+				else
+					System.out.println("No enough payment!");
+				
 				break;
 			case 3:
 				System.out.print("E-Coffee Vender\nDebit Card Payment\n\n");
 				DebitCard dc=(DebitCard) context.getBean("dr");
 				price=dc.paymentValidation(sc);
-				m.consume(cf);
-				pay="Debit";
+
+				if(cf.getPrice()<=price){
+					m.consume(cf);
+					pay="Debit";
+					
+					// transaction
+					Transaction t=(Transaction)context.getBean("tr");
+					t.record(cf.getType(), pay);
+					
+					isPaid=true;
+				}
+				else
+					System.out.println("No enough payment!");
 				break;
 			case 4:
 				
@@ -198,25 +233,19 @@ public class VenderMachine {
 				break;
 			
 			//receipt------------------
-			String type;
-			
-			if(cf.getCreamer()!=0)
-				type="White";
+
+			if(isPaid){
+				LocalDate today=LocalDate.now();
+				System.out.println("E-Coffee Receipt");
+				System.out.printf("%20s : %s\n","Date",today);
+				System.out.println("Coffee Type : "+cf.getType());
+				System.out.println("Price : "+price);
+				System.out.printf("%-20s\n","Thanks-Visit Again");
+			}
 			else
-				type="Black";
-			
-			
-			
-			// transaction
-						Transaction t=(Transaction)context.getBean("tr");
-						t.record(type, pay);
-			
-			LocalDate today=LocalDate.now();
-			System.out.println("E-Coffee Receipt");
-			System.out.printf("%-20s : %s\n","Date",today);
-			System.out.println("Coffee Type : "+type);
-			System.out.println("Price : "+price);
-			System.out.printf("%-20s\n","Thanks-Visit Again");
+				System.out.println("\nTry to pay again to get the coffee!"
+						+ "\n(the Amount you paid less than the coffee value "
+						+ "\nwhould not give you back though :D)\n");
 			
 		}
 		

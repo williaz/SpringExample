@@ -74,6 +74,7 @@ public class CreditCard extends Card implements CardDao {
 	public void setCardData(Scanner sc) {
 		
 		//Scanner sc=new Scanner(System.in);
+		boolean isSet=false;
 		try {
 			sc.nextLine();
 			System.out.println("Enter Name:");
@@ -85,6 +86,8 @@ public class CreditCard extends Card implements CardDao {
 			System.out.println("Phone No.:(10 digits)");
 			this.setPhoneNumber(sc.nextLong());
 			
+			isSet=true;
+			
 			
 			
 		} catch (Exception e) {
@@ -92,17 +95,22 @@ public class CreditCard extends Card implements CardDao {
 			//e.printStackTrace();
 		} finally{
 			//sc.close();
+			if(isSet){
+				this.setId();
+				LocalDate today=LocalDate.now().plusYears(1);
+				
+				this.setValidUpTo(Date.valueOf(today));
+				//---------->DB
+				CreditCardPsCreator psc=new CreditCardPsCreator(this); 
+				jdbcTemplate.update(psc);
+				
+				System.out.println("Update Record Successfully!");
+				
+			}
+			else
+				System.out.println("Update Record No Successfully!");
 		}
 		
-		this.setId();
-		LocalDate today=LocalDate.now().plusYears(1);
-		
-		this.setValidUpTo(Date.valueOf(today));
-		//---------->DB
-		CreditCardPsCreator psc=new CreditCardPsCreator(this); 
-		jdbcTemplate.update(psc);
-		
-		System.out.println("Update Record Successfully!");
 		
 		
 

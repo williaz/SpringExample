@@ -4,6 +4,29 @@ public class Coffee {
 	private int coffeePowder;
 	private int sugar;
 	private int creamer;
+	private String type;
+	
+	public String getType(){
+		
+		
+		if(getCreamer()!=0)
+			type="White";
+		else
+			type="Black";
+		
+		return type;
+		
+	}
+	
+	public long getPrice(){
+		if(coffeePowder>0&&creamer>0)
+			return 10;
+		else if(coffeePowder>0&&creamer==0)
+			return 6;
+		else
+			return 0;
+			
+	}
 	
 	public Coffee(int cp,int sg,int cm){
 		coffeePowder=cp;
