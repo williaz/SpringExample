@@ -7,6 +7,10 @@
 <title>ATM: Welcome</title>
 </head>
 <body>
-weclome!
+<h1>Welcome to Simple ATM</h1>
+
+
+
+
 </body>
 </html>
