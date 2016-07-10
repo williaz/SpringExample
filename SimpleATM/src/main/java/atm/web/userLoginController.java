@@ -11,11 +11,11 @@ import atm.dao.CustomerRepository;
 @Controller
 @RequestMapping("/userLogin")
 public class userLoginController {
-	private CustomerRepository customerDao;
+	private CustomerRepository customerRepository;
 	
 	@Autowired
 	public userLoginController(CustomerRepository customerRepository) {
-		customerDao=customerRepository;
+		this.customerRepository=customerRepository;
 		
 	}
 	
@@ -27,13 +27,18 @@ public class userLoginController {
 
 	@RequestMapping(method=RequestMethod.POST)
 	public String validCustomer(Customer user) {
-		
-		if(customerDao.vaildCustomer(user))
-		{
-			return "redirect:/userHome";
+		Customer cc=customerRepository.findCustomer(user.getId());
+		if(cc!=null) {
+			if(cc.getPin()==user.getPin())
+			{
+				return "redirect:/userHome";
+			}
+			else
+				return "userLogin";
 		}
 		else
 			return "userLogin";
+		
 	}
 
 }

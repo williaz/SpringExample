@@ -3,8 +3,11 @@ package atm.bean;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
 import atm.dao.TransactionDao;
 
+@Component
 public class Customer {
 	private long id;
 	private String type;
@@ -15,6 +18,22 @@ public class Customer {
 	private Date joinDate;
 	private BigDecimal balance;
 	private long mobile;
+	
+	public Customer() {super();};
+	
+	public Customer(long id, String type, String name, int pin, String tempAddress, String permAddress, Date joinDate,
+			BigDecimal balance, long mobile) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.name = name;
+		this.pin = pin;
+		this.tempAddress = tempAddress;
+		this.permAddress = permAddress;
+		this.joinDate = joinDate;
+		this.balance = balance;
+		this.mobile = mobile;
+	}
 	public long getId() {
 		return id;
 	}
