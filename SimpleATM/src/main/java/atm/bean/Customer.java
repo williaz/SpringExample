@@ -5,10 +5,11 @@ import java.sql.Date;
 
 import atm.dao.TransactionDao;
 
-public class Customer implements TransactionDao{
+public class Customer {
 	private long id;
 	private String type;
 	private String name;
+	private int pin;
 	private String tempAddress;
 	private String permAddress;
 	private Date joinDate;
@@ -63,27 +64,12 @@ public class Customer implements TransactionDao{
 		this.mobile = mobile;
 	}
 	
-	//------------DAO
-	
-	public boolean vaildCustomer() {
-		// TODO Auto-generated method stub
-		return false;
+
+	public int getPin() {
+		return pin;
 	}
-	public void deposit(BigDecimal money) {
-		// TODO Auto-generated method stub
-		
-	}
-	public void withdraw(BigDecimal money) {
-		// TODO Auto-generated method stub
-		
-	}
-	public void moneyTransfer(long accountNumber) {
-		// TODO Auto-generated method stub
-		
-	}
-	public void miniStatement() {
-		// TODO Auto-generated method stub
-		
+	public void setPin(int pin) {
+		this.pin = pin;
 	}
 
 }

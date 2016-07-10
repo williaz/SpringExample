@@ -4,14 +4,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ATM: Welcome</title>
+<title>Welcome, Customer!</title>
 </head>
 <body>
-<h1>Welcome to Simple ATM</h1>
 
-<a href= userLogin> User Login</a>
-<a href= adminHome> Admin Login</a>
+<form  method="POST" >
 
 
+Account number <input type="text" name="id" > <br>
+PIN<input type="text" name="pin"> <br>
+
+
+<input type="submit" name="submit" value="Login" ><br>
+
+
+</form>
 </body>
 </html>

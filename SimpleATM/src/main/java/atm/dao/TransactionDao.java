@@ -2,12 +2,15 @@ package atm.dao;
 
 import java.math.BigDecimal;
 
+import atm.bean.Customer;
+
 public interface TransactionDao {
-	public boolean vaildCustomer();
-	public void deposit(BigDecimal money);
-	public void withdraw(BigDecimal money);
-	public void moneyTransfer(long accountNumber);
-	public void miniStatement();
+	public boolean vaildCustomer(Customer user);
+	public void deposit(Customer user,BigDecimal money);
+	public void withdraw(Customer user,BigDecimal money);
+	public void moneyTransfer(Customer user,long accountNumber);
+	public void saveTransaction(Customer user);
+	public void miniStatement(Customer user);
 	
 
 }
