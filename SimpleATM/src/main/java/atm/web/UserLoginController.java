@@ -12,6 +12,7 @@ import atm.dao.CustomerRepository;
 @Controller
 @RequestMapping("/userLogin")
 public class UserLoginController {
+	
 	private CustomerRepository customerRepository;
 	
 	@Autowired
@@ -23,6 +24,7 @@ public class UserLoginController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String getUserLogin() {
+		
 		return "userLogin";
 	}
 

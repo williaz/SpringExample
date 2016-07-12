@@ -3,11 +3,13 @@ package atm.bean;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import atm.dao.TransactionDao;
 
 @Component
+
 public class Customer {
 	private long id;
 	private String type;
