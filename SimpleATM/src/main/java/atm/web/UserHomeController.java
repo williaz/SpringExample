@@ -19,6 +19,7 @@ import atm.dao.CustomerRepository;
 @Controller
 @RequestMapping("/userHome")
 @SessionAttributes("customer")
+
 public class UserHomeController {
 	
 	private CustomerRepository customerRepository;
@@ -31,7 +32,7 @@ public class UserHomeController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String getUserHome() {
-
+		
 		
 		return "userHome";
 	}
@@ -93,25 +94,22 @@ public class UserHomeController {
 	
 	
 	@RequestMapping(value="/transfer", method=RequestMethod.GET)
-	public String makeTransfer(@RequestParam(value="id") long id,
+	public String makeTransfer(@RequestParam(value="tid") long tid,
 								@RequestParam(value="amount", defaultValue="0") BigDecimal amount,
 								@ModelAttribute("customer") Customer cc) {
-		
-		long gid=cc.getId();
-		Customer rev=customerRepository.findCustomer(id);
-		if(rev!=null)
-		{
-			if(customerRepository.moneyTransfer(gid, id, amount))
+
+		int flag=customerRepository.moneyTransfer(cc.getId(), tid, amount);
+		if(1==flag)
 			{
-				Customer cx=customerRepository.findCustomer(gid);
-				BigDecimal balance=cx.getBalance().subtract(amount);
-				cx.setBalance(balance);
 				
-				customerRepository.saveTransaction(cx, "transfer", amount);
+				BigDecimal balance=cc.getBalance().subtract(amount);
+				cc.setBalance(balance);
+				
+				customerRepository.saveTransaction(cc, "transfer", amount);
 				
 				String info="Operation Successfully!";
 			}
-			else
+		else if(-1==flag)
 			{
 				String info="Operation Unsuccessfully During Transferring!";
 				//model.addFlashAttribute("message", info);
@@ -119,39 +117,15 @@ public class UserHomeController {
 			}
 
 			
-		}
-		else
+		
+		else if(0==flag)
 		{
 			String info="The Account to Transfer Dose Not Exist!";
 			//model.addFlashAttribute("message", info);
 
 		}
 	
-		/*int flag=customerRepository.moneyTransfer(gid, id, amount);
-		if (1==flag)
-		{
-
-			BigDecimal balance=cc.getBalance().subtract(amount);
-			cc.setBalance(balance);
-			
-			customerRepository.saveTransaction(cc, "transfer", amount);
-			
-			String info="Operation Successfully!";
-			//model.addFlashAttribute("message", info);
-
-		}
-		else if (-1==flag)
-		{
-			String info="Operation Unsuccessfully During Transferring!";
-			//model.addFlashAttribute("message", info);
-
-		}
-		else if (0==flag)
-		{
-			String info="The Account to Transfer Dose Not Exist!";
-			//model.addFlashAttribute("message", info);
-
-		}*/
+		
 		
 		
 		return "redirect:/userHome";

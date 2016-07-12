@@ -27,7 +27,7 @@ Withdraw Amount:  <input type="text" name="withdraw" >
 </form>
 
 <form  action="./userHome/transfer" method="GET" >
-Account Number to Transfer:  <input type="text" name="id" > 
+Account Number to Transfer:  <input type="text" name="tid" > 
 Amount:  <input type="text" name="amount" > 
 <input type="submit" name="submit" value="Transfer" ><br>
 </form>

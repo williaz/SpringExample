@@ -69,26 +69,32 @@ public class CustomerRepository implements TransactionDao {
 		
 	}
 
-	public boolean moneyTransfer(long givId, long revId,BigDecimal money) {
+	public int moneyTransfer(long givId, long revId,BigDecimal money) {
 		
-		//Customer rev=findCustomer(revId);
+		Customer rev=findCustomer(revId);
 		//make it transaction in the future
-		
-			System.out.println("revId: "+revId);
-			boolean b1=deposit(revId,money);
-			System.out.println("givId: "+givId);
+		if (rev!=null) {
+			//System.out.println("givId: "+givId);
 			boolean b2=withdraw(givId,money);
 			
-			if(b1&&b2)
-				return true;
-			else
-				return false;
+			//System.out.println("revId: "+revId);
+			boolean b1=deposit(revId,money);
+				
+				
+				if(b1&&b2)
+					return 1;
+				else
+					return -1;
+			
+		}else
+			return 0;
+		
 			
 		
 		
 		
 	}
-	
+	// use millisec instead
 	public String addZero(int value) {
 		String ss="0";
 		if(value<10)
