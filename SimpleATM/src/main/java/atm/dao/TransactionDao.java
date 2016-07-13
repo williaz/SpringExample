@@ -1,6 +1,7 @@
 package atm.dao;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import atm.bean.Customer;
 
@@ -10,7 +11,7 @@ public interface TransactionDao {
 	public boolean withdraw(long id,BigDecimal money);
 	public int moneyTransfer(long givId,long revId,BigDecimal mone);
 	public boolean saveTransaction(Customer user, String type,BigDecimal amount);
-	public void miniStatement(Customer user);
+	public List miniStatement(Customer user);
 	
 
 }

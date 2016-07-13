@@ -28,11 +28,11 @@ public class RootConfig {
 	
 
 	
-	@Bean
+	/*@Bean
 	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
 		return new JdbcTemplate(dataSource);
 
-	}
+	}*/
 	
 	
 	

@@ -10,7 +10,7 @@
 <title>User Homepage</title>
 </head>
 <body>
-
+Hi,${customer.name}! No. ${customer.id}<br>
 Your current balance:
 ${customer.balance}<br>
 
@@ -31,6 +31,32 @@ Account Number to Transfer:  <input type="text" name="tid" >
 Amount:  <input type="text" name="amount" > 
 <input type="submit" name="submit" value="Transfer" ><br>
 </form>
+
+<form  action="./userHome/report" method="GET" >
+Mini Statement Report:
+<input type="submit" name="submit" value="Generate" ><br>
+</form>
+
+
+
+	
+<table >
+
+<c:forEach items="${reports}" var="tranx">
+<tr>  
+<th>${tranx.date}</th>
+<th>${tranx.type}</th>
+<th>${tranx.amount}</th>
+<th>${tranx.balance}</th>
+
+</tr>
+
+</c:forEach>
+
+</table>
+
+
+
 
 
 </body>

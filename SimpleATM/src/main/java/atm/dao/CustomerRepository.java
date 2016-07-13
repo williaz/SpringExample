@@ -6,22 +6,45 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import atm.bean.Customer;
+import atm.bean.TransactionRecord;
 import atm.dao.TransactionDao;
 
 @Repository
 public class CustomerRepository implements TransactionDao {
 	private JdbcOperations jdbcOperations;
+	private SimpleJdbcInsert insertTransaction;
+	//private SimpleJdbcCall procReadTransaction;
 
 	@Autowired
-	public CustomerRepository(JdbcOperations jdbcOperations) {
-		this.jdbcOperations=jdbcOperations;
+	public CustomerRepository(DataSource dataSource ) {
+		JdbcTemplate jdbcTemplate=new JdbcTemplate(dataSource);
+		this.jdbcOperations=jdbcTemplate;
+		this.insertTransaction=new SimpleJdbcInsert(dataSource).withTableName("ATM_TRANSACTION");
+		
+		
+		jdbcTemplate.setResultsMapCaseInsensitive(true);
+		
+		/*this.procReadTransaction=new SimpleJdbcCall(jdbcTemplate)
+				.withProcedureName("GET_TRANSACTION_REPORT")
+				.returningResultSet("transactions", new TransactionRecordMapper());*/
 	}
 	
 	private static final class CustomerRowMapper implements RowMapper<Customer> {
@@ -117,7 +140,7 @@ public class CustomerRepository implements TransactionDao {
 		return Long.parseLong(sb.toString());
 	}
 
-	public boolean saveTransaction(Customer user,String type,BigDecimal amount) {
+	/*public boolean saveTransaction(Customer user,String type,BigDecimal amount) {
 		String sql="INSERT INTO ATM_TRANSACTION VALUES (?,?,?,?,?,?)";
 		
 		
@@ -134,10 +157,55 @@ public class CustomerRepository implements TransactionDao {
 			return false;
 	
 		
+	}*/
+	
+	public boolean saveTransaction(Customer user,String type,BigDecimal amount) {
+		
+		Map<String,Object> parameters=new HashMap<String,Object>(6);
+		
+		long tId=getTransactionId();
+		LocalDate today1=LocalDate.now();
+		Date day=Date.valueOf(today1);
+		
+		parameters.put("TRAN_ID", tId);
+		parameters.put("ACC_NO", user.getId());
+		parameters.put("PARTICULARS", type);
+		parameters.put("AMOUNT", amount);
+		parameters.put("BALANCE", user.getBalance());
+		parameters.put("TRAN_DATE", day);
+		
+		int num=insertTransaction.execute(parameters);
+		
+		if(num==1)
+			return true;
+		else
+			return false;
+		
 	}
+	
+	
+	
 
-	public void miniStatement(Customer user) {
-		// TODO Auto-generated method stub
+	public List miniStatement(Customer user) {
+		
+		/*SqlParameterSource in=new MapSqlParameterSource()
+				.addValue("I_NO", user.getId());
+		
+		Map m=new HashMap<String, Object>(1);
+		m=procReadTransaction.execute(in);
+		
+		return (List)m.get("transactions");*/
+		
+		String sql="SELECT ACC_NO, TRAN_DATE, PARTICULARS, AMOUNT, BALANCE "+
+					"FROM(SELECT * FROM ATM_TRANSACTION "+
+					"WHERE ACC_NO=? "+
+					"ORDER BY TRAN_DATE DESC) "+
+					"WHERE ROWNUM<11";
+		
+		List<TransactionRecord> reports=jdbcOperations.query(sql, new Object[] {user.getId()},new TransactionRecordMapper());
+		
+		return reports;
+		
 		
 	}
 

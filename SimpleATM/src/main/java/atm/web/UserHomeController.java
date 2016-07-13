@@ -1,7 +1,7 @@
 package atm.web;
 
 import java.math.BigDecimal;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import atm.bean.Customer;
+import atm.bean.TransactionRecord;
 import atm.dao.CustomerRepository;
 
 @Controller
@@ -23,7 +25,8 @@ import atm.dao.CustomerRepository;
 public class UserHomeController {
 	
 	private CustomerRepository customerRepository;
-	
+
+
 	@Autowired
 	public UserHomeController(CustomerRepository customerRepository) {
 		this.customerRepository=customerRepository;
@@ -31,7 +34,7 @@ public class UserHomeController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String getUserHome() {
+	public String getUserHome(@ModelAttribute("message") String info) {
 		
 		
 		return "userHome";
@@ -39,7 +42,12 @@ public class UserHomeController {
 	
 	@RequestMapping(value="/deposit", method=RequestMethod.GET)
 	public String makeDeposit(@RequestParam(value="deposit", defaultValue="0") BigDecimal amount,
-								@ModelAttribute("customer") Customer cc) {
+								@ModelAttribute("customer") Customer cc,
+								RedirectAttributes model) {
+		
+		
+		
+		//String info;
 		long id=cc.getId();
 		if (customerRepository.deposit(id, amount))
 		{
@@ -50,24 +58,30 @@ public class UserHomeController {
 			customerRepository.saveTransaction(cc, "deposit", amount);
 			
 			String info="Operation Successfully!";
-			//model.addFlashAttribute("message", info);
+			
+			model.addAttribute("message", info);
 
 		}
 		else
 		{
 			String info="Operation Unsuccessfully!";
-			//model.addFlashAttribute("message", info);
+			model.addAttribute("message", info);
 
 		}
 		
+	
 		
 		return "redirect:/userHome";
+		
+		
+		
 	}
 	
 	
 	@RequestMapping(value="/withdraw", method=RequestMethod.GET)
 	public String makeWithdraw(@RequestParam(value="withdraw", defaultValue="0") BigDecimal amount,
-								@ModelAttribute("customer") Customer cc) {
+								@ModelAttribute("customer") Customer cc,
+								RedirectAttributes model) {
 		long id=cc.getId();
 		if (customerRepository.withdraw(id, amount))
 		{
@@ -78,13 +92,13 @@ public class UserHomeController {
 			customerRepository.saveTransaction(cc, "withdraw", amount);
 			
 			String info="Operation Successfully!";
-			//model.addFlashAttribute("message", info);
+			model.addAttribute("message", info);
 
 		}
 		else
 		{
 			String info="Operation Unsuccessfully!";
-			//model.addFlashAttribute("message", info);
+			model.addAttribute("message", info);
  
 		}
 		
@@ -96,7 +110,8 @@ public class UserHomeController {
 	@RequestMapping(value="/transfer", method=RequestMethod.GET)
 	public String makeTransfer(@RequestParam(value="tid") long tid,
 								@RequestParam(value="amount", defaultValue="0") BigDecimal amount,
-								@ModelAttribute("customer") Customer cc) {
+								@ModelAttribute("customer") Customer cc,
+								RedirectAttributes model) {
 
 		int flag=customerRepository.moneyTransfer(cc.getId(), tid, amount);
 		if(1==flag)
@@ -108,11 +123,12 @@ public class UserHomeController {
 				customerRepository.saveTransaction(cc, "transfer", amount);
 				
 				String info="Operation Successfully!";
+				model.addAttribute("message", info);
 			}
 		else if(-1==flag)
 			{
 				String info="Operation Unsuccessfully During Transferring!";
-				//model.addFlashAttribute("message", info);
+				model.addAttribute("message", info);
 
 			}
 
@@ -121,7 +137,7 @@ public class UserHomeController {
 		else if(0==flag)
 		{
 			String info="The Account to Transfer Dose Not Exist!";
-			//model.addFlashAttribute("message", info);
+			model.addAttribute("message", info);
 
 		}
 	
@@ -131,7 +147,22 @@ public class UserHomeController {
 		return "redirect:/userHome";
 	}
 	
+	@RequestMapping(value="/report", method=RequestMethod.GET)
+	public String generateMiniStatement(@ModelAttribute("customer") Customer cc,
+										RedirectAttributes model) {
 	
+		List<TransactionRecord> transactions=customerRepository.miniStatement(cc);
+		
+		for(TransactionRecord tr:transactions)
+		{
+			System.out.println(tr);
+		}
+		
+		model.addFlashAttribute("reports", transactions);
+
+		
+		return "redirect:/userHome";
+	}
 	
 	
 	
