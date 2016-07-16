@@ -55,7 +55,7 @@ Mini Statement Report:
 
 </table>
 
-
+<a href= userLogin> Log Out</a>
 
 
 
