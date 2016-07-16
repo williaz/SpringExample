@@ -30,7 +30,7 @@ import atm.dao.TransactionDao;
 
 import static java.lang.System.out;
 
-@Repository
+@Repository("transactionDao")
 public class CustomerRepository implements TransactionDao {
   private JdbcOperations jdbcOperations;
   private SimpleJdbcInsert insertTransaction;

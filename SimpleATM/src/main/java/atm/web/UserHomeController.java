@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import atm.bean.Customer;
 import atm.bean.TransactionRecord;
 import atm.dao.CustomerRepository;
+import atm.dao.TransactionDao;
 
 @Controller
 @RequestMapping("/userHome")
@@ -24,13 +25,14 @@ import atm.dao.CustomerRepository;
 
 public class UserHomeController {
 	
-	private CustomerRepository customerRepository;
+	//private CustomerRepository customerRepository;
+    private TransactionDao transactionDao;
 
 
 	@Autowired
-	public UserHomeController(CustomerRepository customerRepository) {
-		this.customerRepository=customerRepository;
-		
+	public UserHomeController(TransactionDao transactionDao) {
+		//this.customerRepository=customerRepository;
+		this.transactionDao=transactionDao ;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -49,13 +51,13 @@ public class UserHomeController {
 		
 		//String info;
 		long id=cc.getId();
-		if (customerRepository.deposit(id, amount))
+		if (transactionDao.deposit(id, amount))
 		{
 	
 			BigDecimal balance=cc.getBalance().add(amount);
 			cc.setBalance(balance);
 			
-			customerRepository.saveTransaction(cc, "deposit", amount);
+			transactionDao.saveTransaction(cc, "deposit", amount);
 			
 			String info="Operation Successfully!";
 			
@@ -83,13 +85,13 @@ public class UserHomeController {
 								@ModelAttribute("customer") Customer cc,
 								RedirectAttributes model) {
 		long id=cc.getId();
-		if (customerRepository.withdraw(id, amount))
+		if (transactionDao.withdraw(id, amount))
 		{
 
 			BigDecimal balance=cc.getBalance().subtract(amount);
 			cc.setBalance(balance);
 			
-			customerRepository.saveTransaction(cc, "withdraw", amount);
+			transactionDao.saveTransaction(cc, "withdraw", amount);
 			
 			String info="Operation Successfully!";
 			model.addAttribute("message", info);
@@ -113,14 +115,14 @@ public class UserHomeController {
 								@ModelAttribute("customer") Customer cc,
 								RedirectAttributes model) {
 
-		int flag=customerRepository.moneyTransfer(cc.getId(), tid, amount);
+		int flag=transactionDao.moneyTransfer(cc.getId(), tid, amount);
 		if(1==flag)
 			{
 				
 				BigDecimal balance=cc.getBalance().subtract(amount);
 				cc.setBalance(balance);
 				
-				customerRepository.saveTransaction(cc, "transfer", amount);
+				transactionDao.saveTransaction(cc, "transfer", amount);
 				
 				String info="Operation Successfully!";
 				model.addAttribute("message", info);
@@ -151,7 +153,7 @@ public class UserHomeController {
 	public String generateMiniStatement(@ModelAttribute("customer") Customer cc,
 										RedirectAttributes model) {
 	
-		List<TransactionRecord> transactions=customerRepository.miniStatement(cc);
+		List<TransactionRecord> transactions=transactionDao.miniStatement(cc);
 		
 		for(TransactionRecord tr:transactions)
 		{

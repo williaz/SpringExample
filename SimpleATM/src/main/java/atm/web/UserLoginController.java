@@ -8,17 +8,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import atm.bean.Customer;
 import atm.dao.CustomerRepository;
+import atm.dao.TransactionDao;
 
 @Controller
 @RequestMapping("/userLogin")
 public class UserLoginController {
 	
-	private CustomerRepository customerRepository;
+	//private CustomerRepository customerRepository;
+    private TransactionDao transactionDao;
 	
 	@Autowired
-	public UserLoginController(CustomerRepository customerRepository) {
-		this.customerRepository=customerRepository;
-		
+	public UserLoginController(TransactionDao transactionDao) {
+		//this.customerRepository=customerRepository;
+		this.transactionDao=transactionDao;
 	}
 	
 	
@@ -30,7 +32,7 @@ public class UserLoginController {
 
 	@RequestMapping(method=RequestMethod.POST)
 	public String validCustomer(Customer user,RedirectAttributes model) {
-		Customer cc=customerRepository.findCustomer(user.getId());
+		Customer cc=transactionDao.findCustomer(user.getId());
 		if(cc!=null) {
 			if(cc.getPin()==user.getPin())
 			{
