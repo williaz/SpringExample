@@ -1,14 +1,16 @@
 package atm.config;
 
-import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 @ComponentScan(basePackages= {"atm.bean","atm.dao"})
 public class RootConfig {
 	
@@ -26,7 +28,10 @@ public class RootConfig {
 		
 	}
 	
-	
+	 @Bean
+     public PlatformTransactionManager txManager() {
+         return new DataSourceTransactionManager(dataSource());
+     }
 	
 
 	

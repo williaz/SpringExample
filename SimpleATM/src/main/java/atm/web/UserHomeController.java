@@ -85,24 +85,29 @@ public class UserHomeController {
 								@ModelAttribute("customer") Customer cc,
 								RedirectAttributes model) {
 		long id=cc.getId();
-		if (transactionDao.withdraw(id, amount))
-		{
+		try {
+      if (transactionDao.withdraw(id, amount))
+      {
 
-			BigDecimal balance=cc.getBalance().subtract(amount);
-			cc.setBalance(balance);
-			
-			transactionDao.saveTransaction(cc, "withdraw", amount);
-			
-			String info="Operation Successfully!";
-			model.addAttribute("message", info);
+      	BigDecimal balance=cc.getBalance().subtract(amount);
+      	cc.setBalance(balance);
+      	
+      	transactionDao.saveTransaction(cc, "withdraw", amount);
+      	
+      	String info="Operation Successfully!";
+      	model.addAttribute("message", info);
 
-		}
-		else
-		{
-			String info="Operation Unsuccessfully!";
-			model.addAttribute("message", info);
+      }
+      else
+      {
+      	String info="Operation Unsuccessfully!";
+      	model.addAttribute("message", info);
  
-		}
+      }
+    } catch (Exception e) {
+      String info="You don't own such money!";
+      model.addAttribute("message", info);
+    }
 		
 		
 		return "redirect:/userHome";
@@ -115,33 +120,38 @@ public class UserHomeController {
 								@ModelAttribute("customer") Customer cc,
 								RedirectAttributes model) {
 
-		int flag=transactionDao.moneyTransfer(cc.getId(), tid, amount);
-		if(1==flag)
-			{
-				
-				BigDecimal balance=cc.getBalance().subtract(amount);
-				cc.setBalance(balance);
-				
-				transactionDao.saveTransaction(cc, "transfer", amount);
-				
-				String info="Operation Successfully!";
-				model.addAttribute("message", info);
-			}
-		else if(-1==flag)
-			{
-				String info="Operation Unsuccessfully During Transferring!";
-				model.addAttribute("message", info);
+		try {
+      int flag=transactionDao.moneyTransfer(cc.getId(), tid, amount);
+      if(1==flag)
+      	{
+      		
+      		BigDecimal balance=cc.getBalance().subtract(amount);
+      		cc.setBalance(balance);
+      		
+      		transactionDao.saveTransaction(cc, "transfer", amount);
+      		
+      		String info="Operation Successfully!";
+      		model.addAttribute("message", info);
+      	}
+      else if(-1==flag)
+      	{
+      		String info="Operation Unsuccessfully During Transferring!";
+      		model.addAttribute("message", info);
 
-			}
+      	}
 
-			
-		
-		else if(0==flag)
-		{
-			String info="The Account to Transfer Dose Not Exist!";
-			model.addAttribute("message", info);
+      	
+      
+      else if(0==flag)
+      {
+      	String info="The Account to Transfer Dose Not Exist!";
+      	model.addAttribute("message", info);
 
-		}
+      }
+    } catch (Exception e) {
+      String info="Transfer Unsuccessfully During Transferring!";
+      model.addAttribute("message", info);
+    }
 	
 		
 		
@@ -155,11 +165,11 @@ public class UserHomeController {
 	
 		List<TransactionRecord> transactions=transactionDao.miniStatement(cc);
 		
-		for(TransactionRecord tr:transactions)
+		/*for(TransactionRecord tr:transactions)
 		{
 			System.out.println(tr);
 		}
-		
+		*/
 		model.addFlashAttribute("reports", transactions);
 
 		

@@ -14,21 +14,18 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import atm.bean.Customer;
 import atm.bean.TransactionRecord;
 import atm.dao.TransactionDao;
 
-import static java.lang.System.out;
 
 @Repository("transactionDao")
 public class CustomerRepository implements TransactionDao {
@@ -74,32 +71,27 @@ public class CustomerRepository implements TransactionDao {
      * executed query will return one and only one row. If you get no rows or more than one row that
      * will result in IncorrectResultSizeDataAccessException =>use query method instead..
      */
-   /* List<Customer> cc = jdbcOperations.query(sql, new Object[] {id}, new CustomerRowMapper());
-    
-    //!=null->exception
-    if (cc.size()!=0) {
-      out.println("is Not Null!");
-      return cc.get(0);
-    }
-    else {
-      out.println("is Null!");
-      return null;
-    }*/
-    
+    /*
+     * List<Customer> cc = jdbcOperations.query(sql, new Object[] {id}, new CustomerRowMapper());
+     * 
+     * //!=null->exception if (cc.size()!=0) { out.println("is Not Null!"); return cc.get(0); } else
+     * { out.println("is Null!"); return null; }
+     */
 
-    
+
+
     try {
       Customer cc = jdbcOperations.queryForObject(sql, new Object[] {id}, new CustomerRowMapper());
-      out.println("OK");
+      // out.println("OK");
       return cc;
     } catch (DataAccessException e) {
       // TODO Auto-generated catch block
-      //e.printStackTrace();
-      //out.println("Data excp");
+      // e.printStackTrace();
+      // out.println("Data excp");
       return null;
-    } 
-    
-    
+    }
+
+
   }
 
   public boolean deposit(long id, BigDecimal money) {
@@ -112,13 +104,28 @@ public class CustomerRepository implements TransactionDao {
       return false;
 
   }
-
-  public boolean withdraw(long id, BigDecimal money) {
-    return deposit(id, money.negate());
+  
+ 
+  public boolean withdraw(long id, BigDecimal money) throws Exception {
+    String sql = "UPDATE ATM_ACCOUNT SET BALANCE=BALANCE-? WHERE ACC_NO=?";
+    Customer user = findCustomer(id);
+    BigDecimal bal=user.getBalance();
+    if (money.compareTo(bal)<=0) {
+      int num = jdbcOperations.update(sql, new Object[] {money, id});
+      if (num == 1)
+        return true;
+      else
+        return false;
+    }
+    else
+    {
+      throw new Exception();
+    }
 
   }
-
-  public int moneyTransfer(long givId, long revId, BigDecimal money) {
+  
+  @Transactional
+  public int moneyTransfer(long givId, long revId, BigDecimal money) throws Exception {
 
     Customer rev = findCustomer(revId);
     // make it transaction in the future
@@ -217,7 +224,7 @@ public class CustomerRepository implements TransactionDao {
      */
 
     String sql = "SELECT ACC_NO, TRAN_DATE, PARTICULARS, AMOUNT, BALANCE "
-        + "FROM(SELECT * FROM ATM_TRANSACTION " + "WHERE ACC_NO=? " + "ORDER BY TRAN_DATE DESC) "
+        + "FROM(SELECT * FROM ATM_TRANSACTION " + "WHERE ACC_NO=? " + "ORDER BY TRAN_ID DESC) "
         + "WHERE ROWNUM<11";
 
     List<TransactionRecord> reports =
