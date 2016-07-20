@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +46,7 @@ public class UserHomeController {
 	@RequestMapping(value="/deposit", method=RequestMethod.GET)
 	public String makeDeposit(@RequestParam(value="deposit", defaultValue="0") BigDecimal amount,
 								@ModelAttribute("customer") Customer cc,
-								RedirectAttributes model) {
+								Model model) {
 		
 		
 		
@@ -83,7 +84,7 @@ public class UserHomeController {
 	@RequestMapping(value="/withdraw", method=RequestMethod.GET)
 	public String makeWithdraw(@RequestParam(value="withdraw", defaultValue="0") BigDecimal amount,
 								@ModelAttribute("customer") Customer cc,
-								RedirectAttributes model) {
+								Model model) {
 		long id=cc.getId();
 		try {
       if (transactionDao.withdraw(id, amount))
@@ -118,7 +119,7 @@ public class UserHomeController {
 	public String makeTransfer(@RequestParam(value="tid") long tid,
 								@RequestParam(value="amount", defaultValue="0") BigDecimal amount,
 								@ModelAttribute("customer") Customer cc,
-								RedirectAttributes model) {
+								Model model) {
 
 		try {
       int flag=transactionDao.moneyTransfer(cc.getId(), tid, amount);

@@ -63,6 +63,7 @@ public class CustomerRepository implements TransactionDao {
 
   }
 
+  @Override
   public Customer findCustomer(long id) {
     // System.out.println(user.getId()+" "+user.getPin());
     String sql = "SELECT * FROM ATM_ACCOUNT WHERE ACC_NO=?";
@@ -94,6 +95,7 @@ public class CustomerRepository implements TransactionDao {
 
   }
 
+  @Override
   public boolean deposit(long id, BigDecimal money) {
     String sql = "UPDATE ATM_ACCOUNT SET BALANCE=BALANCE+? WHERE ACC_NO=?";
 
@@ -104,26 +106,25 @@ public class CustomerRepository implements TransactionDao {
       return false;
 
   }
-  
- 
+
+  @Override
   public boolean withdraw(long id, BigDecimal money) throws Exception {
     String sql = "UPDATE ATM_ACCOUNT SET BALANCE=BALANCE-? WHERE ACC_NO=?";
     Customer user = findCustomer(id);
-    BigDecimal bal=user.getBalance();
-    if (money.compareTo(bal)<=0) {
+    BigDecimal bal = user.getBalance();
+    if (money.compareTo(bal) <= 0) {
       int num = jdbcOperations.update(sql, new Object[] {money, id});
       if (num == 1)
         return true;
       else
         return false;
-    }
-    else
-    {
+    } else {
       throw new Exception();
     }
 
   }
-  
+
+  @Override
   @Transactional
   public int moneyTransfer(long givId, long revId, BigDecimal money) throws Exception {
 
@@ -137,8 +138,11 @@ public class CustomerRepository implements TransactionDao {
       boolean b1 = deposit(revId, money);
 
 
-      if (b1 && b2)
+      if (b1 && b2) {
+        // saveTransaction(rev, "transfer", money);
         return 1;
+      }
+
       else
         return -1;
 
@@ -186,7 +190,7 @@ public class CustomerRepository implements TransactionDao {
    * 
    * }
    */
-
+  @Override
   public boolean saveTransaction(Customer user, String type, BigDecimal amount) {
 
     Map<String, Object> parameters = new HashMap<String, Object>(6);
@@ -212,7 +216,7 @@ public class CustomerRepository implements TransactionDao {
   }
 
 
-
+  @Override
   public List miniStatement(Customer user) {
 
     /*
