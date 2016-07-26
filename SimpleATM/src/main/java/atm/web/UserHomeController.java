@@ -101,7 +101,9 @@ public class UserHomeController {
       }
       else
       {
-      	String info="Operation Unsuccessfully!";
+      	String info="Operation Unsuccessfully!"
+      	    + "\nINFO: Cannot withdrawn more than $50000 in a day!"
+      	    + "\nFor every withdrawn maximum capacity is $20000!";
       	model.addAttribute("message", info);
  
       }

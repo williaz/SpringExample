@@ -1,5 +1,5 @@
 package atm.bean;
-//deprecated
+
 import java.math.BigDecimal;
 import java.sql.Date;
 

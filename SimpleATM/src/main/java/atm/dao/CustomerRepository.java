@@ -112,7 +112,14 @@ public class CustomerRepository implements TransactionDao {
     String sql = "UPDATE ATM_ACCOUNT SET BALANCE=BALANCE-? WHERE ACC_NO=?";
     Customer user = findCustomer(id);
     BigDecimal bal = user.getBalance();
-    if (money.compareTo(bal) <= 0) {
+    BigDecimal dailyWd = getDailyWithdrawal(user);
+    if (dailyWd.compareTo(new BigDecimal(50000))>=0) {
+      return false;
+    }//Cannot withdrawn more than RS 50000 in a day
+    else if(money.compareTo(new BigDecimal(20000)) >= 0) {
+      return false;
+    }//For every withdrawn maximum capacity is RS 20000
+    else if (money.compareTo(bal) <= 0) {
       int num = jdbcOperations.update(sql, new Object[] {money, id});
       if (num == 1)
         return true;
@@ -236,6 +243,30 @@ public class CustomerRepository implements TransactionDao {
 
     return reports;
 
+
+  }
+  //only count withdraw, not net withdraw
+  public BigDecimal getDailyWithdrawal(Customer user){
+    LocalDate today1 = LocalDate.now();
+    Date day = Date.valueOf(today1);
+    
+    String sql = "SELECT AMOUNT FROM ATM_TRANSACTION " 
+    + "WHERE ACC_NO=? AND TRAN_DATE=? AND PARTICULARS=?";
+
+    List<BigDecimal> amounts =
+      //  jdbcOperations.query(sql, new Object[] {user.getId(), day,"withdraw"},BigDecimal.class);
+    jdbcOperations.queryForList(sql, new Object[] {user.getId(), day,"withdraw"},BigDecimal.class);
+    
+    BigDecimal sum=new BigDecimal(0);
+    
+    for(BigDecimal amount:amounts) {
+      System.out.println(amount);
+      sum=sum.add(amount);
+    }
+    /////////
+    System.out.println(sum);
+    
+    return sum;
 
   }
 
