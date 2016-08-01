@@ -3,23 +3,52 @@ package atm.bean;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import atm.dao.TransactionDao;
 
 @Component
-
+@Entity
+@Table(name="ATM_ACCOUNT")
 public class Customer {
-	private long id;
+    @Id
+   // @GeneratedValue
+    @Column(name="ACC_NO")
+	//private long id;
+    private Long id;
+    
+    @Column(name="ACC_TYPE")
 	private String type;
+    
+    @Column(name="ACC_NAME")
 	private String name;
-	private int pin;
+    
+    @Column(name="ACC_PIN")
+	//private int pin;
+    private Integer pin;
+    
+    @Column(name="TEMP_ADDRESS")
 	private String tempAddress;
+    
+    @Column(name="PERM_ADDRESS")
 	private String permAddress;
+    
+    @Column(name="JOIN_DATE")
 	private Date joinDate;
+    
+    @Column(name="BALANCE")
 	private BigDecimal balance;
-	private long mobile;
+    
+    @Column(name="MOBLIE")
+	//private long mobile;
+    private Long mobile;
 	
 	public Customer() {super();};
 	
@@ -36,7 +65,7 @@ public class Customer {
 		this.balance = balance;
 		this.mobile = mobile;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	public void setId(long id) {
@@ -78,7 +107,7 @@ public class Customer {
 	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
 	}
-	public long getMobile() {
+	public Long getMobile() {
 		return mobile;
 	}
 	public void setMobile(long mobile) {
@@ -86,7 +115,7 @@ public class Customer {
 	}
 	
 
-	public int getPin() {
+	public Integer getPin() {
 		return pin;
 	}
 	public void setPin(int pin) {

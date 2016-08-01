@@ -132,7 +132,7 @@ public class CustomerRepository implements TransactionDao {
   }
 
   @Override
-  @Transactional
+  //@Transactional
   public int moneyTransfer(long givId, long revId, BigDecimal money) throws Exception {
 
     Customer rev = findCustomer(revId);

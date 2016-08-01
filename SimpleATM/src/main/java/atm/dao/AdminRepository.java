@@ -6,10 +6,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import atm.bean.Customer;
 
 @Repository("adminDao")
+@Transactional
 public class AdminRepository implements AdminDao{
   private SessionFactory sessionFactory;
 
