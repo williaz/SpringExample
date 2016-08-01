@@ -13,11 +13,27 @@ table, th, td {
     border: 0.5px solid black;
 }
 </style>
+
 </head>
 <body>
 ${message}<hr>
 
-Add New Customer:
+<h1 id="top">To Do </h1>
+<ol>
+<li><a href="#add">Add New Customer</a></li>
+<li><a href="#changeTempAddress">Change Temporary Address</a></li>
+<li><a href="#changePermAddress">Change Permanent Address</a></li>
+<li><a href="#changePhone">Change Phone Number</a></li>
+<li><a href="#changePin">Change PIN</a></li>
+<li><a href="#delete">Delete a Customer</a></li>
+<li><a href="#viewAll">View All Accounts Info</a></li>
+<li><a href="#viewOne">View Specific Customer</a></li>
+<li><a href="#location">Search Customer by Location</a></li>
+</ol>
+
+<hr>
+<!-- add -->
+<h2 id="add">Add New Customer:</h2>
 <form action="./adminHome/form" method="Post" >
 
 Account number <input type="text" name="id" > <br>
@@ -35,10 +51,9 @@ PIN<input type="text" name="pin"> <br>
 
 </form>
 
-<table>
-<tr>
-<td>
-Change Temporary Address:
+<!-- ch temp -->
+
+<h2 id="changeTempAddress">Change Temporary Address:</h2>
 <form action="./adminHome/form" method="Post" >
 
 Account number <input type="text" name="id" > <br>
@@ -48,11 +63,11 @@ Temporary Address<input type="text" name="tempAddress" > <br>
 <input type="submit" name="sumbit" value="update" ><br>
 
 </form>
-</td>
 
-<td>
+<!-- ch perm -->
 
-Change Permanent Address:
+
+<h2 id="changePermAddress">Change Permanent Address:</h2> 
 <form action="./adminHome/form" method="Post" >
 
 Account number <input type="text" name="id" > <br>
@@ -62,13 +77,10 @@ Permanent Address<input type="text" name="permAddress" > <br>
 <input type="submit" name="sumbit" value="update" ><br>
 
 </form>
-</td>
-</tr>
 
-<tr>
-<td>
+<!-- ch Ph -->
 
-Change Phone Number:
+<h2 id="changePhone">Change Phone Number:</h2>
 <form action="./adminHome/form" method="Post" >
 
 Account number <input type="text" name="id" > <br>
@@ -78,10 +90,10 @@ Phone Number<input type="text" name="mobile" > <br>
 <input type="submit" name="sumbit" value="update" ><br>
 
 </form>
-</td>
 
-<td>
-Change PIN:
+<!-- ch pin -->
+
+<h2 id="changePin">Change PIN:</h2>
 <form action="./adminHome/form" method="Post" >
 
 Account number <input type="text" name="id" > <br>
@@ -91,12 +103,10 @@ PIN<input type="text" name="pin"> <br>
 
 </form>
 
-</td>
-</tr>
-</table>
 
-<hr>
+<!-- del -->
 
+<h2 id="delete">Delete a Customer:</h2>
 <form action="./adminHome/delete" method="GET" >
 
 Account number <input type="text" name="id" >
@@ -105,14 +115,18 @@ Account number <input type="text" name="id" >
 
 </form>
 
-<hr>
+<!-- view all -->
+<h2 id="viewAll">View All Accounts Info:</h2>
 <form action="./adminHome/all" method="GET" >
 
 
 All Accounts<input type="submit" name="sumbit" value="view" ><br>
 
 </form>
-<hr>
+
+<!-- view one -->
+
+<h2 id="viewOne">View Specific Customer:</h2>
 <form action="./adminHome/one" method="GET" >
 
 Account number <input type="text" name="id" >
@@ -120,8 +134,9 @@ Account number <input type="text" name="id" >
 <input type="submit" name="sumbit" value="view" ><br>
 
 </form>
-<hr>
 
+<!-- view by location -->
+<h2 id="location">Search Customer by Location</h2>
 <form action="./adminHome/location" method="GET" >
 
 Permanent Address<input type="text" name="permAddress" > 
