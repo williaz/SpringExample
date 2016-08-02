@@ -2,7 +2,10 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<!--  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+-->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -34,22 +37,45 @@ ${message}<hr>
 <hr>
 <!-- add -->
 <h2 id="add">Add New Customer:</h2>
+<fieldset>
+<legend>Customer Details</legend>
 <form action="./adminHome/form" method="Post" >
 
-Account number <input type="text" name="id" > <br>
-Account type <input type="text" name="type" > <br>
-Name <input type="text" name="name" > <br>
-Temporary Address<input type="text" name="tempAddress" > <br>
-Permanent Address<input type="text" name="permAddress" > <br>
-Phone Number<input type="text" name="mobile" > <br>
-Join Date<input type="text" name="joinDate" > Formate(yyyy-[m]m-[d]d)<br>
-Balance<input type="text" name="balance" > <br>
-PIN<input type="text" name="pin"> <br>
+Account number <input type="text" name="id" maxlength="20" required="required"> <br>
+Account type: <input type="radio" name="type" value="saving" checked="checked">saving
+ <input type="radio" name="type" value="checking">checking<br>
+Name <input type="text" name="name" placeholder="Enter Full Name"> <br>
+Temporary Address
+<select name="tempAddress">
+<option value="Boston">Boston</option>
+<option value="Edison">Edison</option>
+<option value="Harrison">Harrison</option>
+<option value="Jersey City">Jersey City</option>
+<option value="DC">DC</option>
+<option value="Hawii">Hawii</option>
+<option value="Newark">Newark</option>
+</select><br>
+Permanent Address
+<select name="permAddress">
+<option value="USA">USA</option>
+<option value="UK">UK</option>
+<option value="China">China</option>
+<option value="Brazil">Brazil</option>
+<option value="India">India</option>
+<option value="Korea">Korea</option>
+</select><br>
+Phone Number<input type="text" name="mobile" maxlength="10" required="required" /> <br>
+Join Date<input type="date" name="joinDate" /> <br>
+<!-- Formate(yyyy-[m]m-[d]d) -->
+Balance<input type="text" name="balance" required="required" placeholder="$$$$"/> <br>
+PIN<input type="password" name="pin" maxlength="4" required="required"/> <br>
 
-<input type="submit" name="sumbit" value="add" >
+<input type="submit" name="sumbit" value="add" />
+</form>
+</fieldset>
 <br>
 
-</form>
+
 
 <!-- ch temp -->
 
@@ -129,7 +155,7 @@ All Accounts<input type="submit" name="sumbit" value="view" ><br>
 <h2 id="viewOne">View Specific Customer:</h2>
 <form action="./adminHome/one" method="GET" >
 
-Account number <input type="text" name="id" >
+Account number <input type="search" name="id" >
 
 <input type="submit" name="sumbit" value="view" ><br>
 
@@ -139,30 +165,49 @@ Account number <input type="text" name="id" >
 <h2 id="location">Search Customer by Location</h2>
 <form action="./adminHome/location" method="GET" >
 
-Permanent Address<input type="text" name="permAddress" > 
+Permanent Address<input type="search" name="permAddress" > 
 
 <input type="submit" name="sumbit" value="findByLocation" ><br>
 
 </form>
 
+<hr>
 
+<table>
+
+
+<thead>
+<tr>
+<th scope="col">Account Number</th>
+<th scope="col">Name</th>
+<th scope="col">Temporary Address </th>
+<th scope="col">Permanent Address</th>
+<th scope="col">Phone Number</th>
+<th scope="col">Join Date</th>
+<th scope="col">Balance</th>
+<th scope="col">Password</th>
+</tr>
+</thead>
+<tbody>
 <c:forEach items="${reports}" var="customer">
 <tr>  
-<th>${customer.id}</th>
-<th>${customer.type}</th>
-<th>${customer.name}</th>
-<th>${customer.tempAddress}</th>
-<th>${customer.permAddress}</th>
-<th>${customer.mobile}</th>
-<th>${customer.joinDate}</th>
-<th>${customer.balance}</th>
-<th>${customer.pin}</th>
+<td>${customer.id}</td>
+<td>${customer.type}</td>
+<td>${customer.name}</td>
+<td>${customer.tempAddress}</td>
+<td>${customer.permAddress}</td>
+<td>${customer.mobile}</td>
+<td>${customer.joinDate}</td>
+<td>${customer.balance}</td>
+<td>${customer.pin}</td>
 </tr>
-
 </c:forEach>
+</tbody>
+
+
+
 
 </table>
-
 
 
 
