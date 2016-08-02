@@ -61,6 +61,9 @@ public class AdminHomeController {
 	  List<Customer> lists= adminService.viewAccounts();
 	  model.addFlashAttribute("reports", lists);
 	  
+	  String info="Go to See Result list!";
+      model.addAttribute("message", info);
+	  
 	  return  "redirect:/adminHome";
 	  
 	}
@@ -70,6 +73,9 @@ public class AdminHomeController {
                                    RedirectAttributes model) {
       List<Customer> lists= adminService.viewAccountsByLocation(permAddress);
       model.addFlashAttribute("reports", lists);
+      
+      String info="Go to See Result list!";
+      model.addAttribute("message", info);
       
       return  "redirect:/adminHome";
       
@@ -81,6 +87,9 @@ public class AdminHomeController {
       List<Customer> lists= new ArrayList();
       lists.add(adminService.viewCustomerDetails(id));
       model.addFlashAttribute("reports", lists);
+      
+      String info="Go to See Result list!";
+      model.addAttribute("message", info);
       
       return  "redirect:/adminHome";
       

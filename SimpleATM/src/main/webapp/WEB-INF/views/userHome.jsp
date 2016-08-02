@@ -42,16 +42,27 @@ Mini Statement Report:
 	
 <table >
 
+
+<thead>
+<tr>
+<th>Date</th>
+<th>Transaction Type</th>
+<th>Amount</th>
+<th>Balance</th>
+</tr>
+</thead>
+
+<tbody>
 <c:forEach items="${reports}" var="tranx">
 <tr>  
-<th>${tranx.date}</th>
-<th>${tranx.type}</th>
-<th>${tranx.amount}</th>
-<th>${tranx.balance}</th>
-
+<td>${tranx.date}</td>
+<td>${tranx.type}</td>
+<td>${tranx.amount}</td>
+<td>${tranx.balance}</td>
 </tr>
-
 </c:forEach>
+</tbody>
+
 
 </table>
 

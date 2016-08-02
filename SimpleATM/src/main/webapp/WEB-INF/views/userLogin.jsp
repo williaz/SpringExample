@@ -11,13 +11,15 @@
 <form  method="POST" >
 
 
-Account number <input type="text" name="id" > <br>
-PIN<input type="text" name="pin"> <br>
+Account number <input type="text" name="id" maxlength="20"/> <br>
+PIN<input type="password" name="pin" maxlength="4"/> <br>
 
 
-<input type="submit" name="submit" value="Login" ><br>
+<input type="submit" name="submit" value="Login" /><br>
 
 
 </form>
+<br>
+<a href="home">Back to Home page</a>
 </body>
 </html>

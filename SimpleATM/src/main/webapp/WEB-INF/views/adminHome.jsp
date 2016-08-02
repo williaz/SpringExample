@@ -19,22 +19,97 @@ table, th, td {
 
 </head>
 <body>
+
+<h3>Display Message:</h3>
 ${message}<hr>
 
+<!-- top -->
 <h1 id="top">To Do </h1>
 <ol>
+<li><a href="#viewAll">View All Accounts Info</a></li>
+<li><a href="#viewOne">View Specific Customer</a></li>
+<li><a href="#location">Search Customer by Location</a></li>
+<li><a href="#list">See the Result List</a></li>
 <li><a href="#add">Add New Customer</a></li>
 <li><a href="#changeTempAddress">Change Temporary Address</a></li>
 <li><a href="#changePermAddress">Change Permanent Address</a></li>
 <li><a href="#changePhone">Change Phone Number</a></li>
 <li><a href="#changePin">Change PIN</a></li>
 <li><a href="#delete">Delete a Customer</a></li>
-<li><a href="#viewAll">View All Accounts Info</a></li>
-<li><a href="#viewOne">View Specific Customer</a></li>
-<li><a href="#location">Search Customer by Location</a></li>
+<li><a href="home">Back to Home page</a></li>
 </ol>
 
+
 <hr>
+
+<!-- view all -->
+<h2 id="viewAll">View All Accounts Info:</h2>
+<form action="./adminHome/all" method="GET" >
+
+
+All Accounts<input type="submit" name="sumbit" value="view" ><br>
+
+</form>
+
+<!-- view one -->
+
+<h2 id="viewOne">View Specific Customer:</h2>
+<form action="./adminHome/one" method="GET" >
+
+Account number <input type="search" name="id" >
+
+<input type="submit" name="sumbit" value="view" ><br>
+
+</form>
+
+<!-- view by location -->
+<h2 id="location">Search Customer by Location</h2>
+<form action="./adminHome/location" method="GET" >
+
+Permanent Address<input type="search" name="permAddress" > 
+
+<input type="submit" name="sumbit" value="findByLocation" ><br>
+
+</form>
+
+<hr>
+
+<!-- list -->
+<h2 id="list">Result List</h2>
+<table>
+
+<thead>
+<tr>
+<th scope="col">Account Number</th>
+<th scope="col">Name</th>
+<th scope="col">Account Type</th>
+<th scope="col">Temporary Address </th>
+<th scope="col">Permanent Address</th>
+<th scope="col">Phone Number</th>
+<th scope="col">Join Date</th>
+<th scope="col">Balance</th>
+<th scope="col">Password</th>
+</tr>
+</thead>
+<tbody>
+<c:forEach items="${reports}" var="customer">
+<tr>  
+<td>${customer.id}</td>
+<td>${customer.type}</td>
+<td>${customer.name}</td>
+<td>${customer.tempAddress}</td>
+<td>${customer.permAddress}</td>
+<td>${customer.mobile}</td>
+<td>${customer.joinDate}</td>
+<td>${customer.balance}</td>
+<td>${customer.pin}</td>
+</tr>
+</c:forEach>
+</tbody>
+
+</table>
+
+
 <!-- add -->
 <h2 id="add">Add New Customer:</h2>
 <fieldset>
@@ -141,73 +216,6 @@ Account number <input type="text" name="id" >
 
 </form>
 
-<!-- view all -->
-<h2 id="viewAll">View All Accounts Info:</h2>
-<form action="./adminHome/all" method="GET" >
-
-
-All Accounts<input type="submit" name="sumbit" value="view" ><br>
-
-</form>
-
-<!-- view one -->
-
-<h2 id="viewOne">View Specific Customer:</h2>
-<form action="./adminHome/one" method="GET" >
-
-Account number <input type="search" name="id" >
-
-<input type="submit" name="sumbit" value="view" ><br>
-
-</form>
-
-<!-- view by location -->
-<h2 id="location">Search Customer by Location</h2>
-<form action="./adminHome/location" method="GET" >
-
-Permanent Address<input type="search" name="permAddress" > 
-
-<input type="submit" name="sumbit" value="findByLocation" ><br>
-
-</form>
-
-<hr>
-
-<table>
-
-
-<thead>
-<tr>
-<th scope="col">Account Number</th>
-<th scope="col">Name</th>
-<th scope="col">Temporary Address </th>
-<th scope="col">Permanent Address</th>
-<th scope="col">Phone Number</th>
-<th scope="col">Join Date</th>
-<th scope="col">Balance</th>
-<th scope="col">Password</th>
-</tr>
-</thead>
-<tbody>
-<c:forEach items="${reports}" var="customer">
-<tr>  
-<td>${customer.id}</td>
-<td>${customer.type}</td>
-<td>${customer.name}</td>
-<td>${customer.tempAddress}</td>
-<td>${customer.permAddress}</td>
-<td>${customer.mobile}</td>
-<td>${customer.joinDate}</td>
-<td>${customer.balance}</td>
-<td>${customer.pin}</td>
-</tr>
-</c:forEach>
-</tbody>
-
-
-
-
-</table>
 
 
 
