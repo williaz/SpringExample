@@ -1,5 +1,7 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!--  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,3 +25,78 @@ PIN<input type="password" name="pin" maxlength="4"/> <br>
 <a href="home">Back to Home page</a>
 </body>
 </html>
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="simple ATM">
+    <meta name="author" content="Will Wang">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Welcome, Customer!</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="static/css/ie10-viewport-bug-workaround.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/signin.css" rel="stylesheet" type="text/css">
+<!--     Custom styles for this template -->
+<!--     <link href="static/css/cover.css" rel="stylesheet" type="text/css"> -->
+
+  </head>
+
+  <body>
+  
+
+    <div class="container">
+    
+<!--      <div class="masthead clearfix"> -->
+<!--             <div class="inner"> -->
+<!--               <h3 class="masthead-brand">ATM</h3> -->
+<!--               <nav> -->
+<!--                 <ul class="nav masthead-nav"> -->
+<!--                   <li ><a href="home">Home</a></li> -->
+<!--                   <li class="active"><a href="userLogin">User Login</a></li> -->
+<!--                   <li><a href="adminHome">Admin Login</a></li> -->
+<!--                 </ul> -->
+<!--               </nav> -->
+<!--             </div> -->
+<!--           </div> -->
+
+      <form class="form-signin" method="POST">
+        <h2 class="form-signin-heading">Customer Sign in</h2>
+        <label for="id" class="sr-only">Account number</label>
+        <input type="text" name="id" class="form-control" placeholder="Account number" maxlength="20" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="pin" class="form-control" placeholder="Password" maxlength="4" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"name="submit" >Sign in</button>
+      </form>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="static/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
