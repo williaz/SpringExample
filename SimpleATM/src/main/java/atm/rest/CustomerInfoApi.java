@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import atm.bean.AtmError;
 import atm.bean.Customer;
+import atm.bean.TransactionRecord;
 import atm.dao.TransactionDao;
+import atm.service.AdminService;
 
 @RestController
 @RequestMapping("/customers")
 public class CustomerInfoApi {
   private TransactionDao transactionDao;
+  @Autowired
+  private AdminService adminService;
   
   @Autowired
   public CustomerInfoApi(TransactionDao transactionDao) {
@@ -36,15 +40,25 @@ public class CustomerInfoApi {
     return cc;
 
   }
-  
+  //http://localhost:8081/SimpleATM/customers/ministatement/1234567890
   @RequestMapping(value="/ministatement/{id}",method=RequestMethod.GET, 
       produces="application/json")
-  public @ResponseBody List<Customer> getMiniStatement(@PathVariable long id){
+  public @ResponseBody List<TransactionRecord> getMiniStatement(@PathVariable long id){
     
     Customer cc =transactionDao.findCustomer(id);
     if(cc==null) {throw new CustomerNotFoundException(id);}
     return transactionDao.miniStatement(cc);
   }
+  //http://localhost:8081/SimpleATM/customers/location/USA
+  @RequestMapping(value="/location/{place}", method=RequestMethod.GET,
+      produces="application/xml")
+  public @ResponseBody List<Customer> getCustmorByLocation(@PathVariable String place){
+    List<Customer> lists=adminService.viewAccountsByLocation(place);
+    return lists;
+    
+  }
+  
+  
   
   @ExceptionHandler(CustomerNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)

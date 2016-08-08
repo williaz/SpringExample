@@ -8,6 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,35 +22,40 @@ import atm.dao.TransactionDao;
 @Component
 @Entity
 @Table(name="ATM_ACCOUNT")
+@XmlRootElement(name="customer")
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class Customer {
+  //An Attribute is something that is self-contained, i.e., a color, an ID, a name.
+  //An Element is something that does or could have attributes of its own or contain other elements.
     @Id
    // @GeneratedValue
     @Column(name="ACC_NO")
 	//private long id;
+   // @XmlAttribute(required=true) 
     private Long id;
-    
+  //  @XmlElement(required=true) 
     @Column(name="ACC_TYPE")
 	private String type;
-    
+  //  @XmlElement(required=true) 
     @Column(name="ACC_NAME")
 	private String name;
-    
+  //  @XmlElement(required=true) 
     @Column(name="ACC_PIN")
 	//private int pin;
     private Integer pin;
-    
+   // @XmlElement(required=true) 
     @Column(name="TEMP_ADDRESS")
 	private String tempAddress;
-    
+   // @XmlElement(required=true) 
     @Column(name="PERM_ADDRESS")
 	private String permAddress;
-    
+  //  @XmlElement(required=true) 
     @Column(name="JOIN_DATE")
 	private Date joinDate;
-    
+   // @XmlElement(required=true) 
     @Column(name="BALANCE")
 	private BigDecimal balance;
-    
+  //  @XmlElement(required=true) 
     @Column(name="MOBLIE")
 	//private long mobile;
     private Long mobile;
