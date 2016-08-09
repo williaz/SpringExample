@@ -56,7 +56,7 @@
                 <ul class="nav masthead-nav">
                   <li class="active"><a href="home">Home</a></li>
                   <li><a href="userLogin">User Login</a></li>
-                  <li><a href="adminHome">Admin Login</a></li>
+                  <li><a href="adminHome">Admin Home</a></li>
                 </ul>
               </nav>
             </div>

@@ -49,12 +49,36 @@ PIN<input type="password" name="pin" maxlength="4"/> <br>
 
     <!-- Custom styles for this template -->
     <link href="static/css/signin.css" rel="stylesheet" type="text/css">
-<!--     Custom styles for this template -->
-<!--     <link href="static/css/cover.css" rel="stylesheet" type="text/css"> -->
+    
+	<link href="navbar-fixed-top.css" rel="stylesheet" type="text/css">
 
   </head>
 
   <body>
+  
+  
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://www.github.com/williaz/SpringExample/tree/master/SimpleATM">Simple ATM</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li ><a href="home">Home</a></li>
+            <li class="active"><a href="userLogin">User Login</a></li>
+            <li><a href="adminHome">Admin Home</a></li>
+          </ul>
+          
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
   
 
     <div class="container">
@@ -88,7 +112,12 @@ PIN<input type="password" name="pin" maxlength="4"/> <br>
 
     </div> <!-- /container -->
 
-
+ <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="static/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="static/js/ie10-viewport-bug-workaround.js"></script>
   </body>
