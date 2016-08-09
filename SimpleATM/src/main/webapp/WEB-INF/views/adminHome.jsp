@@ -29,7 +29,7 @@
 <link href="static/css/navbar-fixed-top.css" rel="stylesheet"
 	type="text/css">
 
-<link href="dashboard.css" rel="stylesheet" type="text/css">
+<link href="static/css/dashboard.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -310,5 +310,10 @@
 
 
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="static/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
